@@ -5,14 +5,7 @@ import DatePicker from "react-datepicker";
 import 'react-datepicker/dist/react-datepicker.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import axios from "axios";
-
-
-const apiv ="https://integrator.magneto365.com/api/v2/vacants?dateRange="
-const apit ="n3UFDV45SZxA3JuYzu3okVGjSxJo2MEGfWZctpmAY7fW5mqtvz"
-const apiu ="api.solvoglobal@magneto365.com"
-
-const apic ="https://integrator.magneto365.com/api/v2/candidates?vacant="
-
+import {apic,apiu,apiv,apit} from "../../configapp";
 
 const data = [];
 const data2 = [];
