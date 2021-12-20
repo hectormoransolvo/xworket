@@ -6,6 +6,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import axios from "axios";
 import {apic,apiu,apiv,apit} from "../../configapp";
+// IMPORTAR DESDE ARCHIVO
 
 const data = [];
 const data2 = [];
