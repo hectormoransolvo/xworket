@@ -63,13 +63,14 @@ class Bar extends Component {
 
         console.log(idCandidatos);   
         let cCadena = apic+idCandidatos;
+        //alert( cCadena ) ;
         console.log(cCadena);
         axios
           .get(cCadena, { auth: { username: apiu, password: apit } })
-          .then((response2) => {
-            if (response2.status) {
-              this.setState({ data2: response2.data.candidates });   
-              console.log(data2);
+          .then((response) => {
+            if (response.status) {
+              this.setState({ data2: response.data.candidates });   
+              console.log(response.data.candidates);
             }
           });        
            
@@ -114,6 +115,8 @@ class Bar extends Component {
                 </div>
 
 
+
+
                 <div className="contenedor">
 
                     <br /><br />
@@ -147,11 +150,66 @@ class Bar extends Component {
 
 
 
+
+
                     </tbody>
                     </table>
 
 
                 </div>                
+
+
+
+
+
+                <div className="contenedor">
+
+                    <br /><br />
+                    <table className="table ">
+                    <thead>
+                        <tr>
+                        <th>ID</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Phone</th>
+                        <th>email</th>
+                    
+ 
+                        </tr>
+                    </thead>
+                    <tbody>
+
+ 
+
+
+                    {this.state.data2.map(candidates=>{
+                    return(
+                        <tr>
+                    <td>{candidates.id}</td>
+                    <td>{candidates.firstName}</td>
+                    <td>{candidates.lastName}</td>
+                    <td>{candidates.phone}</td>
+                    <td>{candidates.email}</td>
+                                   
+
+                    </tr>
+                    )
+                    })}
+
+
+                    </tbody>
+                    </table>
+
+
+                </div>                
+
+
+
+
+
+
+
+
 
 
 
