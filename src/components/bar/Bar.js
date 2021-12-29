@@ -6,6 +6,9 @@ import 'react-datepicker/dist/react-datepicker.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import axios from "axios";
 import {apic,apiu,apiv,apit} from "../../configapp";
+
+import {Button, Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';
+
 // IMPORTAR DESDE ARCHIVO
 
 const data = [];
@@ -34,14 +37,21 @@ function formatDate(date1) {
 
 class Bar extends Component {    
 
+
+    
+
     
 
     state={
         fecha: new Date(),
         data: data,
         data2: data2,
+        abierto: false,
       }
 
+    abrirModal=()=>{
+        this.setState({abierto: !this.state.abierto});
+    }
 
     onChange=dato=>{
             this.setState({fecha: dato});
@@ -55,6 +65,9 @@ class Bar extends Component {
     
     mostrarCandidatos =idCandidatos=>{
 
+
+       
+
         console.log(idCandidatos);   
         let cCadena = apic+idCandidatos;
         //alert( cCadena ) ;
@@ -64,6 +77,7 @@ class Bar extends Component {
           .then((response) => {
             if (response.status) {
               this.setState({ data2: response.data.candidates });   
+              this.setState({abierto: !this.state.abierto});               
               console.log(response.data.candidates);
             }
           });        
@@ -93,6 +107,12 @@ class Bar extends Component {
 
 
     render(){
+        const modalStyles={
+            position: "absolute",
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)'
+          }
     
         return (
             <>
@@ -135,7 +155,9 @@ class Bar extends Component {
                     <td>{vacantes.status}</td>
                     <td>{formatDate(vacantes.createdAt)}</td>
                     <td>
-                        <button value="Candidates"  className="btn btn-primary" onClick={()=>{this.mostrarCandidatos(vacantes.id)}}>Candidates</button>
+                        <Button color="success" onClick={()=>{this.mostrarCandidatos(vacantes.id)}}>Candidates</Button>
+
+                         
                     </td>                    
 
                     </tr>
@@ -152,50 +174,80 @@ class Bar extends Component {
 
                 </div>                
 
+                <Modal size="lg" isOpen={this.state.abierto} style={modalStyles}>
+                    <ModalHeader>
+                    Candidates
+                    </ModalHeader>
+                    <ModalBody>
+
+
+                    <div className="contenedor">
+
+                            <br /><br />
+                            <table className="table ">
+                            <thead>
+                                <tr>
+                                <th>ID</th>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Phone</th>
+                                <th>email</th>
+
+
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                            {this.state.data2.map(candidates=>{
+                            return(
+                                <tr>
+                            <td>{candidates.id}</td>
+                            <td>{candidates.firstName}</td>
+                            <td>{candidates.lastName}</td>
+                            <td>{candidates.phone}</td>
+                            <td>{candidates.email}</td>
+                                        
+
+                            </tr>
+                            )
+                            })}
+
+
+                            </tbody>
+                            </table>
+
+
+                    </div>       
 
 
 
 
-                <div className="contenedor">
-
-                    <br /><br />
-                    <table className="table ">
-                    <thead>
-                        <tr>
-                        <th>ID</th>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>Phone</th>
-                        <th>email</th>
-                    
- 
-                        </tr>
-                    </thead>
-                    <tbody>
-
- 
 
 
-                    {this.state.data2.map(candidates=>{
-                    return(
-                        <tr>
-                    <td>{candidates.id}</td>
-                    <td>{candidates.firstName}</td>
-                    <td>{candidates.lastName}</td>
-                    <td>{candidates.phone}</td>
-                    <td>{candidates.email}</td>
-                                   
-
-                    </tr>
-                    )
-                    })}
 
 
-                    </tbody>
-                    </table>
 
 
-                </div>                
+
+
+                    </ModalBody>
+
+                    <ModalFooter>
+                         
+                        <Button color="primary" onClick={this.abrirModal}>Ok</Button>
+                    </ModalFooter>
+                </Modal>
+
+
+
+
+
+
+
+
+
+
+         
 
 
 
